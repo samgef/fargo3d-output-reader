@@ -27,7 +27,7 @@ def print_quick_info(data):
     print("  bigplanet0.dat:", len(data["bigplanet"]))
     print("  planet0.dat   :", len(data["planet"]))
     print("\nFirst row of orbit data:")
-    print(data["orbit"].iloc[0])
+    ## print(data["orbit"})
 
 # def make_plots()
 
