@@ -17,10 +17,8 @@ def load_fargo_data():
     ]
 
     orbit = pd.read_csv("orbit0.dat", sep=r"\s+", header=None, names=orbit_cols)
-    bigplanet = pd.read_csv("bigplanet0.dat", sep=r"\s+", header=None, names=planet_cols)
-    planet = pd.read_csv("planet0.dat", sep=r"\s+", header=None, names=planet_cols)
 
-    return {"orbit": orbit, "bigplanet": bigplanet, "planet": planet}
+    return {"orbit": orbit}
 
 
 def print_quick_info(data):
@@ -40,12 +38,8 @@ def make_plots(data):
     orbit = orbit.sort_values("time").drop_duplicates(subset="time")
     big = big.sort_values("time").drop_duplicates(subset="time")
 
-    # Downsample for faster / cleaner plots
-    orbit_plot = orbit.iloc[::200]
-    big_plot = big.iloc[::200]
-
+    
     # --- Plot 1: change in semi-major axis (a - a0) ---
-    a0 = orbit_plot["a"].iloc[0]
     plt.figure()
     plt.plot(orbit_plot["time"], orbit_plot["a"] - a0)
     plt.xlabel("time")
@@ -53,24 +47,7 @@ def make_plots(data):
     plt.title("Change in semi-major axis: a(t) - a0")
     plt.show()
 
-    # --- Plot 2: eccentricity vs time ---
-    plt.figure()
-    plt.plot(orbit_plot["time"], orbit_plot["ecc"])
-    plt.xlabel("time")
-    plt.ylabel("ecc")
-    plt.title("Eccentricity evolution: e(t)")
-    plt.show()
-
-    # --- Plot 3: x-y path (scatter avoids ugly lines if there are jumps) ---
-    plt.figure()
-    plt.scatter(big_plot["x"], big_plot["y"], s=1)
-    plt.gca().set_aspect("equal", adjustable="box")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.title("Planet path in x-y (scatter, time-sorted)")
-    plt.show()
-
-
+ 
 def main():
     print("SCRIPT STARTED")
     data = load_fargo_data()
