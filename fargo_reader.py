@@ -29,30 +29,13 @@ def print_quick_info(data):
     print("\nFirst row of orbit data:")
     print(data["orbit"].iloc[0])
 
-
-def make_plots(data):
-    orbit = data["orbit"].copy()
-    big = data["bigplanet"].copy()
-
-    # Sort by time and drop duplicate times (helps remove restart/time-jump artifacts)
-    orbit = orbit.sort_values("time").drop_duplicates(subset="time")
-    big = big.sort_values("time").drop_duplicates(subset="time")
-
-    
-    # --- Plot 1: change in semi-major axis (a - a0) ---
-    plt.figure()
-    plt.plot(orbit_plot["time"], orbit_plot["a"] - a0)
-    plt.xlabel("time")
-    plt.ylabel("a - a0")
-    plt.title("Change in semi-major axis: a(t) - a0")
-    plt.show()
+# def make_plots()
 
  
 def main():
     print("SCRIPT STARTED")
     data = load_fargo_data()
     print_quick_info(data)
-    make_plots(data)
     input("DONE - press Enter to close...")
 
 
